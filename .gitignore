@@ -1,0 +1,17 @@
+node_modules/
+.env
+*.env.local
+dist/
+build/
+.DS_Store
+*.log
+npm-debug.log*
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+!*.tfvars.example
+.terraform.lock.hcl
+kubeconfig
+*.pem
+*.key
