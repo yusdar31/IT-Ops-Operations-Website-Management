@@ -67,7 +67,7 @@ export default function Register() {
       footer={(
         <p className="text-sm text-slate-400">
           Sudah punya akun?{' '}
-          <Link to="/login" className="font-medium text-amber-300 transition hover:text-amber-200">
+          <Link to="/login" className="font-medium text-blue-600 transition hover:text-blue-700">
             Kembali ke login
           </Link>
         </p>
@@ -184,3 +184,4 @@ export default function Register() {
     </AuthShell>
   );
 }
+

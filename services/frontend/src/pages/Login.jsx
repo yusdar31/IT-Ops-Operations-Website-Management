@@ -45,7 +45,7 @@ export default function Login() {
       footer={(
         <p className="text-sm text-slate-400">
           Belum punya akun?{' '}
-          <Link to="/register" className="font-medium text-amber-300 transition hover:text-amber-200">
+          <Link to="/register" className="font-medium text-blue-600 transition hover:text-blue-700">
             Buat akun baru
           </Link>
         </p>
@@ -107,3 +107,4 @@ export default function Login() {
     </AuthShell>
   );
 }
+

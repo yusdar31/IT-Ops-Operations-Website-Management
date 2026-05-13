@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { assetApi, ticketApi } from '../api/axios';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { formatRelativeTime } from '../lib/format';
+import { useDensity } from '../lib/uiDensity';
 
 const statCards = [
   { key: 'assetTotal', title: 'Total Assets', icon: Server, tone: 'text-blue-700 bg-blue-50 border-blue-100' },
@@ -31,6 +32,7 @@ function StatCard({ title, value, icon: Icon, tone, delay }) {
 }
 
 export default function Dashboard() {
+  const { compact } = useDensity();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [stats, setStats] = useState({
@@ -77,7 +79,7 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="space-y-5">
+    <div className={`${compact ? 'space-y-4' : 'space-y-5'}`}>
       <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
         <div>
           <h2 className="text-2xl font-semibold text-slate-900">Overview</h2>
@@ -90,23 +92,23 @@ export default function Dashboard() {
 
       {error ? <div className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div> : null}
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className={`grid md:grid-cols-2 xl:grid-cols-4 ${compact ? 'gap-3' : 'gap-4'}`}>
         {statCards.map((card, index) => (
           <StatCard key={card.key} title={card.title} value={loading ? '...' : stats[card.key]} icon={card.icon} tone={card.tone} delay={0.04 * (index + 1)} />
         ))}
       </div>
 
-      <div className="grid gap-5 xl:grid-cols-[1.3fr_0.7fr]">
+      <div className={`grid xl:grid-cols-[1.3fr_0.7fr] ${compact ? 'gap-4' : 'gap-5'}`}>
         <Card className="border-slate-200 bg-white">
-          <CardHeader className="pb-4">
+          <CardHeader className={compact ? 'pb-2' : 'pb-4'}>
             <CardTitle className="text-lg text-slate-900">Recent ticket activity</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-2">
+          <CardContent className={compact ? 'space-y-1.5' : 'space-y-2'}>
             {loading ? (
               <div className="rounded-md border border-dashed border-slate-300 px-4 py-8 text-center text-sm text-slate-500">Memuat aktivitas tiket...</div>
             ) : ticketHighlights.length ? (
               ticketHighlights.map((ticket) => (
-                <div key={ticket.id} className="rounded-md border border-slate-200 bg-slate-50 px-4 py-3">
+                <div key={ticket.id} className={`rounded-md border border-slate-200 bg-slate-50 ${compact ? 'px-3 py-2' : 'px-4 py-3'}`}>
                   <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                     <div>
                       <div className="flex items-center gap-2">
@@ -131,7 +133,7 @@ export default function Dashboard() {
 
         <div className="grid gap-5">
           <Card className="border-slate-200 bg-white">
-            <CardHeader className="pb-4">
+            <CardHeader className={compact ? 'pb-2' : 'pb-4'}>
               <CardTitle className="text-lg text-slate-900">Assets by department</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
@@ -156,7 +158,7 @@ export default function Dashboard() {
           </Card>
 
           <Card className="border-slate-200 bg-white">
-            <CardHeader className="pb-4">
+            <CardHeader className={compact ? 'pb-2' : 'pb-4'}>
               <CardTitle className="text-lg text-slate-900">Ticket categories</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">

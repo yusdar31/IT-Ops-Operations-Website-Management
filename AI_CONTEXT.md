@@ -138,3 +138,36 @@ Proyek ini adalah migrasi dari aplikasi monolith AWS IT Inventory System (berbas
    - Menambahkan aksi **update status** untuk role `admin/technician` (`PUT /tickets/:id`).
 2. Verifikasi build:
    - `npm run build` pada `services/frontend` berhasil setelah perubahan ini.
+
+### J. Perubahan Arah Desain UI (13 Mei 2026)
+1. Arah desain frontend diubah dari gaya futuristik/dark menjadi gaya **enterprise ticketing** yang lebih familiar untuk user umum (mendekati pola Jira/ITSM modern).
+2. File utama yang diperbarui:
+   - `services/frontend/src/index.css` (theme, token, komponen form/UI utility)
+   - `services/frontend/src/components/Layout.jsx` (sidebar + topbar lebih standar)
+   - `services/frontend/src/pages/Dashboard.jsx`
+   - `services/frontend/src/pages/Assets.jsx`
+   - `services/frontend/src/pages/Tickets.jsx`
+   - Penyesuaian link warna auth pada `services/frontend/src/pages/Login.jsx` dan `services/frontend/src/pages/Register.jsx`
+3. Ciri UI baru:
+   - Background terang (`slate-100`), panel putih, border halus, bayangan minimal.
+   - Tombol primer biru, badge status/priority dengan warna informatif yang lebih familiar.
+   - Tabel/list lebih datar dan mudah dipindai oleh user non-teknis.
+4. Validasi:
+   - `npm run build` frontend sukses setelah redesign.
+
+### K. Penambahan Mode Compact (13 Mei 2026)
+1. Ditambahkan mode density global `comfortable` / `compact` untuk frontend.
+2. Implementasi utama:
+   - `services/frontend/src/lib/uiDensity.js`
+     - Menyimpan preferensi ke `localStorage` key: `ui_density`
+     - Sync state antar komponen via event `ui-density-change`
+   - Toggle mode ditambahkan di topbar pada `services/frontend/src/components/Layout.jsx`
+3. Halaman yang sudah menerapkan compact spacing:
+   - `services/frontend/src/pages/Dashboard.jsx`
+   - `services/frontend/src/pages/Assets.jsx`
+   - `services/frontend/src/pages/Tickets.jsx`
+4. Efek compact:
+   - Padding card, row table/list, tinggi input, dan jarak antar section diperkecil.
+   - Cocok untuk user yang butuh lebih banyak informasi dalam satu viewport.
+5. Validasi:
+   - `npm run build` frontend sukses setelah compact mode diterapkan.
