@@ -171,3 +171,22 @@ Proyek ini adalah migrasi dari aplikasi monolith AWS IT Inventory System (berbas
    - Cocok untuk user yang butuh lebih banyak informasi dalam satu viewport.
 5. Validasi:
    - `npm run build` frontend sukses setelah compact mode diterapkan.
+
+### L. Baseline GitHub Actions (13 Mei 2026)
+1. Ditambahkan workflow baseline:
+   - `.github/workflows/ci-baseline.yml`
+2. Trigger:
+   - `push` ke `main`
+   - `pull_request` ke `main`
+3. Cakupan baseline:
+   - Frontend build check (`services/frontend`: `npm ci` + `npm run build`)
+   - Backend syntax check (`node --check`) untuk `auth-api`, `asset-api`, `ticket-api`
+4. Alasan strategis:
+   - Menjaga quality gate minimum selama fase fitur masih aktif berubah.
+   - Menunda deploy automation penuh sampai fondasi packaging/deployment stabil.
+5. Catatan transisi ke CI/CD lengkap (saat fitur mendekati final):
+   - Lengkapi `Dockerfile` seluruh service.
+   - Tambah job test lebih dalam (unit/integration).
+   - Tambah build/push image ke registry.
+   - Tambah deploy staging otomatis.
+   - Tambah approval gate untuk promote ke production.

@@ -155,6 +155,41 @@ Jika login gagal, cek apakah hash admin di tabel `users` sudah sinkron dengan pa
 
 - Untuk handover antar AI agent, lihat `AI_CONTEXT.md`.
 
+## Baseline CI (Sudah Aktif)
+
+Repo ini sudah punya baseline GitHub Actions di:
+
+- `.github/workflows/ci-baseline.yml`
+
+Workflow ini jalan saat `push` dan `pull_request` ke `main`, dengan scope:
+
+1. Frontend build check (`npm ci` + `npm run build`)
+2. Backend syntax check (`node --check`) untuk:
+   - `auth-api`
+   - `asset-api`
+   - `ticket-api`
+
+Tujuan baseline ini: menjaga kualitas dasar selama fase fitur masih bergerak cepat, tanpa mengunci tim ke pipeline deploy yang belum stabil.
+
+## Kapan Naik ke CI/CD Lengkap
+
+Saat fitur sudah mendekati final, lanjutkan dari baseline ini ke pipeline penuh.
+
+Sinyal waktu yang tepat untuk naik level:
+
+1. Perubahan skema data mulai jarang dan endpoint utama relatif stabil.
+2. `Dockerfile` semua service sudah jadi dan bisa build konsisten.
+3. Environment staging sudah siap (secret, ingress, dan endpoint health).
+4. Tim sudah sepakat gating branch berbasis status checks.
+
+Tahap upgrade yang direkomendasikan:
+
+1. Tambah job test terstruktur (unit/integration).
+2. Tambah build artifact/container image.
+3. Push image ke registry (ECR/GHCR).
+4. Deploy otomatis ke staging.
+5. Tambah approval gate/manual promote ke production.
+
 ## Roadmap Pendek
 
 1. Finalisasi UX operasional (edit/delete assets, assignee workflow, dsb).
